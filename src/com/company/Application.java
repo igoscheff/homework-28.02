@@ -33,8 +33,11 @@ public class Application {
         List<Account> accountList = Arrays.asList(account1,account2,account3,account4,account5);
 
         Predicate<Account> notZeroBalance = account -> account.getBalance() > 0;
-        Predicate<Account> balanceGreaterAndNotLocked = account ->
-                account.getBalance() > 100000 && account.isLocked() == false;
+
+        Predicate<Account> isBalancePositive = account -> account.getBalance() > 100000;
+        Predicate<Account> isLocked = account -> account.isLocked() == false;
+
+        Predicate<Account> balanceGreaterAndNotLocked = isBalancePositive.and(isLocked);
 
         AccFilter filter = new AccFilter();
         List<Account> filteredList1 = filter.filter(accountList, notZeroBalance);
